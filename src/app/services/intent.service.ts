@@ -36,6 +36,11 @@ export class IntentService {
 
   removeAnswer = (id, text) => {
     const url = `${this.url}/${id}/answer`;
-    return this.serverService.delete(url);
+    return this.serverService.delete(url, {messages: text});
+  }
+
+  removeQuestion = (id, text) => {
+    const url = `${this.url}/${id}/question`;
+    return this.serverService.delete(url, {training_phrases: text});
   }
 }

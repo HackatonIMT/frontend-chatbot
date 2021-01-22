@@ -66,10 +66,7 @@ export class SmartTableComponent {
   constructor(private service: SmartTableData, private activeRoute: ActivatedRoute) {
     this.activeRoute.queryParams.subscribe((queryParams: Params) => {
       this.queryParam = queryParams['code'];
-      console.log('## code'+this.queryParam);
-      console.log("constructor get data");
-      const data = this.service.getData(this.queryParam).then((data) => {
-        console.log(data);
+      this.service.getData(this.queryParam).then((data) => {
         // @ts-ignore
         this.source.load(data["questions"]);
         // @ts-ignore
@@ -77,13 +74,23 @@ export class SmartTableComponent {
       });
     });
 
-    // console.log(data);
-    // this.source.load([data]);
   }
 
-  onDeleteConfirm(event): void {
+  onDeleteQuestionConfirm(event): void {
     if (window.confirm('Confirmer la suppression ?')) {
-      event.confirm.resolve();
+      const data = this.service.removeQuestion(this.queryParam, event.data['training_phrases']).then(() => {
+        event.confirm.resolve();
+      });
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  onDeleteAnswerConfirm(event): void {
+    if (window.confirm('Confirmer la suppression ?')) {
+      const data = this.service.removeAnswer(this.queryParam, event.data['messages']).then(() => {
+        event.confirm.resolve();
+      });
     } else {
       event.confirm.reject();
     }
@@ -91,8 +98,7 @@ export class SmartTableComponent {
 
   onCreateQuestionConfirm(event): void {
     if (window.confirm('Confirmer la création d\'une nouvelle question ?')) {
-      const data = this.service.sendQuestion(this.queryParam, event.newData).then((data) => {
-        console.log(data);
+      const data = this.service.sendQuestion(this.queryParam, event.newData).then(() => {
         event.confirm.resolve();
       });
     } else {
@@ -102,8 +108,7 @@ export class SmartTableComponent {
 
   onCreateAnswerConfirm(event): void {
     if (window.confirm('Confirmer la création d\'une nouvelle réponse ?')) {
-      const data = this.service.sendAnswer(this.queryParam, event.newData).then((data) => {
-        console.log(data);
+      const data = this.service.sendAnswer(this.queryParam, event.newData).then(() => {
         event.confirm.resolve();
       });
     } else {

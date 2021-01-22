@@ -433,9 +433,7 @@ export class SmartTableService extends SmartTableData {
 
   // @ts-ignore
   async getData(queryParam: string): Promise<unknown> {
-    // this.intentService.getIntents()
     return this.intentService.getIntent(queryParam).toPromise();
-    //return this.data;
   }
 
   async sendQuestion(queryParam: string, question:string): Promise<unknown> {
@@ -444,6 +442,14 @@ export class SmartTableService extends SmartTableData {
 
   async sendAnswer(queryParam: string, question:string): Promise<unknown> {
     return this.intentService.addAnswer(queryParam, question).toPromise();
+  }
+
+  async removeQuestion(queryParam: string, question:string): Promise<unknown> {
+    return this.intentService.removeQuestion(queryParam, question).toPromise();
+  }
+
+  async removeAnswer(queryParam: string, answer:string): Promise<unknown> {
+    return this.intentService.removeAnswer(queryParam, answer).toPromise();
   }
 }
 

@@ -4,10 +4,10 @@
   </nb-card-header>
 
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" (createConfirm)="onCreateQuestionConfirm($event)">
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteQuestionConfirm($event)" (createConfirm)="onCreateQuestionConfirm($event)">
     </ng2-smart-table>
     <br>
-    <ng2-smart-table [settings]="settingsAnswers" [source]="sourceAnswers" (deleteConfirm)="onDeleteConfirm($event)" (createConfirm)="onCreateAnswerConfirm($event)">
+    <ng2-smart-table [settings]="settingsAnswers" [source]="sourceAnswers" (deleteConfirm)="onDeleteAnswerConfirm($event)" (createConfirm)="onCreateAnswerConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
