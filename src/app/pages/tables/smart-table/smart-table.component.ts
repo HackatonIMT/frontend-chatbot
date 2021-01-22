@@ -16,6 +16,7 @@ export class SmartTableComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -27,26 +28,10 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      // id: {
-      //   title: 'ID',
-      //   type: 'number',
-      // },
       training_phrases: {
         title: 'Questions',
         type: 'string',
       },
-      // username: {
-      //   title: 'Username',
-      //   type: 'string',
-      // },
-      // email: {
-      //   title: 'E-mail',
-      //   type: 'string',
-      // },
-      // age: {
-      //   title: 'Age',
-      //   type: 'number',
-      // },
     },
   };
 
@@ -55,6 +40,7 @@ export class SmartTableComponent {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
+      confirmCreate: true,
     },
     edit: {
       editButtonContent: '<i class="nb-edit"></i>',
@@ -66,26 +52,10 @@ export class SmartTableComponent {
       confirmDelete: true,
     },
     columns: {
-      // id: {
-      //   title: 'ID',
-      //   type: 'number',
-      // },
       messages: {
         title: 'Réponses',
         type: 'string',
       },
-      // username: {
-      //   title: 'Username',
-      //   type: 'string',
-      // },
-      // email: {
-      //   title: 'E-mail',
-      //   type: 'string',
-      // },
-      // age: {
-      //   title: 'Age',
-      //   type: 'number',
-      // },
     },
   };
 
@@ -97,21 +67,48 @@ export class SmartTableComponent {
     this.activeRoute.queryParams.subscribe((queryParams: Params) => {
       this.queryParam = queryParams['code'];
       console.log('## code'+this.queryParam);
+      console.log("constructor get data");
+      const data = this.service.getData(this.queryParam).then((data) => {
+        console.log(data);
+        // @ts-ignore
+        this.source.load(data["questions"]);
+        // @ts-ignore
+        this.sourceAnswers.load(data["answers"]);
+      });
     });
-    const data = this.service.getData().then((data) => {
-      console.log(data);
-      this.source.load([data]);
-      this.sourceAnswers.load([data]);
-    });
+
     // console.log(data);
     // this.source.load([data]);
   }
 
   onDeleteConfirm(event): void {
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm('Confirmer la suppression ?')) {
       event.confirm.resolve();
     } else {
       event.confirm.reject();
     }
   }
+
+  onCreateQuestionConfirm(event): void {
+    if (window.confirm('Confirmer la création d\'une nouvelle question ?')) {
+      const data = this.service.sendQuestion(this.queryParam, event.newData).then((data) => {
+        console.log(data);
+        event.confirm.resolve();
+      });
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  onCreateAnswerConfirm(event): void {
+    if (window.confirm('Confirmer la création d\'une nouvelle réponse ?')) {
+      const data = this.service.sendAnswer(this.queryParam, event.newData).then((data) => {
+        console.log(data);
+        event.confirm.resolve();
+      });
+    } else {
+      event.confirm.reject();
+    }
+  }
+
 }

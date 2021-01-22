@@ -432,10 +432,18 @@ export class SmartTableService extends SmartTableData {
   }];
 
   // @ts-ignore
-  async getData() {
+  async getData(queryParam: string): Promise<unknown> {
     // this.intentService.getIntents()
-    return this.intentService.getIntent("14858e10-896f-49f8-984d-9581921ab203").toPromise();
+    return this.intentService.getIntent(queryParam).toPromise();
     //return this.data;
+  }
+
+  async sendQuestion(queryParam: string, question:string): Promise<unknown> {
+    return this.intentService.addQuestion(queryParam, question).toPromise();
+  }
+
+  async sendAnswer(queryParam: string, question:string): Promise<unknown> {
+    return this.intentService.addAnswer(queryParam, question).toPromise();
   }
 }
 

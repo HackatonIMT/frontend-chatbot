@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
   template: `
     <span class="created-by">
-      Created with ♥ by IMT Atlantique Hackathon Group 4 with open-source templates by <b><a href="https://akveo.page.link/8V2f" target="_blank">Akveo</a></b>
+      Created with ♥ by IMT Atlantique Hackathon Group 4 based in open-source templates by <b><a href="https://akveo.page.link/8V2f" target="_blank">Akveo</a></b>
     </span>
   `,
 })

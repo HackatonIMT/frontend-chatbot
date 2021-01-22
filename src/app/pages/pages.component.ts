@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
 import {IntentService} from "../services/intent.service";
-import {NbMenuItem} from "@nebular/theme";
 
 interface MyObj {
   myString: string;
@@ -26,16 +25,12 @@ export class PagesComponent {
   }
 
   ngOnInit(): void {
-    // this.intentService.getIntents().subscribe((data: Intent[]) => {
-    //   this.intents = data;
-    // });
-    const data: Promise<void | Array<MyObj>> = this.getData().then((data) => {
-      console.log(data);
+    this.getData().then((data) => {
       this.menu = [
         {
           title: 'Accueil',
           icon: 'home-outline',
-          link: '/pages/dashboard',
+          link: '/pages/forms/buttons',
           home: true,
         },
         {
@@ -45,6 +40,7 @@ export class PagesComponent {
       ];
 
       let topics = [];
+      if (data["topics"])
       for (let topic of data["topics"]) {
         let newTopic = {};
         if(topic["subs"] == []) {
@@ -54,13 +50,12 @@ export class PagesComponent {
             link: '/pages/tables/smart-table',
             queryParams: {code: topic["code"]},
           };
-          topics.push(newTopic)
+          topics.push(newTopic);
         } else {
-          let topicChildren = []
+          let topicChildren = [];
           for (let subtopic of topic["subs"]) {
             let newSubTopic = {
               title: subtopic["topic"],
-              icon: 'grid-outline',
               link: '/pages/tables/smart-table',
               queryParams: {code: subtopic["code"]},
             };
@@ -71,11 +66,10 @@ export class PagesComponent {
             icon: 'grid-outline',
             children: topicChildren
           };
-          topics.push(newTopic);
+          // @ts-ignore
+          this.menu.push(newTopic);
         }
       }
-      console.log("MY TOPICS !");
-      console.log(topics);
 
       this.menu.push({
           title: 'Transfert de Crédits',
@@ -87,11 +81,13 @@ export class PagesComponent {
               children: [
                 {
                   title: 'Exemple 1.1',
-                  // link: '/pages/tables/smart-table',
+                  link: '/pages/tables/smart-table',
+                  queryParams: {code: "14858e10-896f-49f8-984d-9581921ab203"},
                 },
                 {
                   title: 'Exemple 1.2',
-                  // link: '/pages/tables/tree-grid',
+                  link: '/pages/tables/smart-table',
+                  queryParams: {code: "14858e10-896f-49f8-984d-9581921ab203"},
                 },
               ],
             },
@@ -103,120 +99,23 @@ export class PagesComponent {
           children: [
             {
               title: 'Exemple 1',
-              // link: '/auth/login',
+              link: '/pages/tables/smart-table',
+              queryParams: {code: "14858e10-896f-49f8-984d-9581921ab203"},
             },
             {
               title: 'Exemple 2',
-              // link: '/auth/register',
+              link: '/pages/tables/smart-table',
+              queryParams: {code: "14858e10-896f-49f8-984d-9581921ab203"},
             },
           ],
         }, );
-      // this.source.load([data]);
-      this.menu = [
-        {
-          title: 'Accueil',
-          icon: 'home-outline',
-          link: '/pages/dashboard',
-          home: true,
-        },
-        {
-          title: 'THÈMES',
-          group: true,
-        },
-        {
-          title: 'Intersemestre',
-          icon: 'grid-outline',
-          children: [
-            {
-              title: 'Affectation',
-              link: '/pages/tables/smart-table',
-              queryParams: {code: '1'},
-            },
-            {
-              title: 'Compétences',
-              link: '/pages/tables/smart-table',
-            },
-            {
-              title: 'Contact',
-              link: '/pages/tables/smart-table',
-            },
-            {
-              title: 'Format',
-              link: '/pages/tables/tree-grid',
-            },
-            {
-              title: 'Inscription',
-              children: [
-                {
-                  title: 'Creation',
-                  link: '/pages/tables/smart-table',
-                },
-                {
-                  title: 'Info',
-                  link: '/pages/tables/tree-grid',
-                },
-              ],
-            },
-            {
-              title: 'Lieu',
-              link: '/pages/tables/tree-grid',
-            },
-            {
-              title: 'Sujet',
-              link: '/pages/tables/tree-grid',
-            },
-          ],
-        },
-        {
-          title: 'Transfert de Crédits',
-          icon: 'shuffle-2-outline',
-          children: [
-            {
-              title: '404',
-              icon: 'grid-outline',
-              children: [
-                {
-                  title: 'Smart Table',
-                  link: '/pages/tables/smart-table',
-                },
-                {
-                  title: 'Tree Grid',
-                  link: '/pages/tables/tree-grid',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          title: 'Communication',
-          icon: 'message-circle-outline',
-          children: [
-            {
-              title: 'Login',
-              link: '/auth/login',
-            },
-            {
-              title: 'Register',
-              link: '/auth/register',
-            },
-            {
-              title: 'Request Password',
-              link: '/auth/request-password',
-            },
-            {
-              title: 'Reset Password',
-              link: '/auth/reset-password',
-            },
-          ],
-        },
-      ];
     });
 
   }
 
   async getData() {
     // this.intentService.getIntents()
-    return this.intentService.getIntent("14858e10-896f-49f8-984d-9581921ab203").toPromise();
+    return this.intentService.getTopics().toPromise();
     // return this.data;
   }
 
