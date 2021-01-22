@@ -20,8 +20,8 @@ export class ServerService {
     return this.http.post<T>(this.baseUrl + extension, data, this.getParams()).pipe(catchError(this.handleError));
   }
 
-  delete = (extension, params = null) => {
-    return this.http.delete(this.baseUrl + extension, this.getParams(params)).pipe(catchError(this.handleError));
+  delete = (extension) => {
+    return this.http.delete(this.baseUrl + extension, this.getParams()).pipe(catchError(this.handleError));
   }
 
   put = <T>(extension, data, params = null) => {

@@ -78,7 +78,7 @@ export class SmartTableComponent {
 
   onDeleteQuestionConfirm(event): void {
     if (window.confirm('Confirmer la suppression ?')) {
-      const data = this.service.removeQuestion(this.queryParam, event.data['training_phrases']).then(() => {
+      const data = this.service.removeQuestion(this.queryParam, event.data['id']).then(() => {
         event.confirm.resolve();
       });
     } else {
@@ -88,7 +88,7 @@ export class SmartTableComponent {
 
   onDeleteAnswerConfirm(event): void {
     if (window.confirm('Confirmer la suppression ?')) {
-      const data = this.service.removeAnswer(this.queryParam, event.data['messages']).then(() => {
+      const data = this.service.removeAnswer(this.queryParam, event.data['id']).then(() => {
         event.confirm.resolve();
       });
     } else {

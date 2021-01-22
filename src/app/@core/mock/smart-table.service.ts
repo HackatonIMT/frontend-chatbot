@@ -440,8 +440,8 @@ export class SmartTableService extends SmartTableData {
     return this.intentService.addQuestion(queryParam, question).toPromise();
   }
 
-  async sendAnswer(queryParam: string, question:string): Promise<unknown> {
-    return this.intentService.addAnswer(queryParam, question).toPromise();
+  async sendAnswer(queryParam: string, answer:string): Promise<unknown> {
+    return this.intentService.addAnswer(queryParam, answer).toPromise();
   }
 
   async removeQuestion(queryParam: string, question:string): Promise<unknown> {

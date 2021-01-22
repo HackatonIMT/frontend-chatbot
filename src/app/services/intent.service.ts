@@ -34,13 +34,13 @@ export class IntentService {
     return this.serverService.put(url, data);
   }
 
-  removeAnswer = (id, text) => {
-    const url = `${this.url}/${id}/answer`;
-    return this.serverService.delete(url, {messages: text});
+  removeAnswer = (id, answerId) => {
+    const url = `${this.url}/${id}/message/${answerId}`;
+    return this.serverService.delete(url);
   }
 
-  removeQuestion = (id, text) => {
-    const url = `${this.url}/${id}/question`;
-    return this.serverService.delete(url, {training_phrases: text});
+  removeQuestion = (id, questionId) => {
+    const url = `${this.url}/${id}/phrase/${questionId}`;
+    return this.serverService.delete(url);
   }
 }
