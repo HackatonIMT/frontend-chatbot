@@ -8,7 +8,7 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ServerService {
-  private baseUrl =  "http://be31f5fa4350.ngrok.io/";
+  private baseUrl =  "https://hackathon-app.osc-fr1.scalingo.io/";
 
   constructor(private http: HttpClient) { }
 
